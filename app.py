@@ -13,6 +13,7 @@ import requests
 import json
 import csv
 import copy
+import serial.tools.list_ports
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './uploads'
@@ -32,8 +33,8 @@ selected_port = "未接続"
 @app.route('/')
 def index():
     setting_data = json.load(open(".config","r"))
-    port_ls = glob.glob("/dev/tty.usb*")
-    port_ls = [i.replace("/dev/tty.usb","") for i in port_ls]
+    port_ls = serial.tools.list_ports.comports()
+    port_ls = [i.device for i in port_ls ]
     if setting_data["selected_port"] in port_ls:
         return render_template('index.html',selected_port=setting_data["selected_port"])
     else:
@@ -42,8 +43,8 @@ def index():
 @app.route('/settings', methods=["GET", "POST"])
 def setting():
     setting_data = json.load(open(".config","r"))
-    port_ls = glob.glob("/dev/tty.usb*")
-    port_ls = [i.replace("/dev/tty.usb","") for i in port_ls]
+    port_ls = serial.tools.list_ports.comports()
+    port_ls = [i.device for i in port_ls ]
     if request.method == "GET":
         if setting_data["selected_port"] in port_ls:
             selected_port = f'<option selected value="{setting_data["selected_port"]}">{setting_data["selected_port"]}</option>'
@@ -74,7 +75,7 @@ def data():
     selected_port = setting_data["selected_port"]
     def generate_data():
         if not selected_port == "":
-            ser = serial.Serial(f'/dev/tty.usb{selected_port}', 9600,timeout=None)
+            ser = serial.Serial(selected_port, 9600,timeout=None)
             
             if os.path.isfile(f'downlinkdata/{setting_data["default_output_file"]}'):
                 file = open(f'downlinkdata/{setting_data["default_output_file"]}', 'a')
