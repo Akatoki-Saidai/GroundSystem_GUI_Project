@@ -1,0 +1,63 @@
+#map {
+    margin-top: 10px;
+    height: 90vh;
+    width: 100%;
+}
+body {
+    margin: 10px;
+}
+
+.table-container {
+    margin: auto;
+}
+table {
+    width: 100%;
+    border: 2px solid #7cd1e0;
+    border-collapse: collapse;
+    
+}
+table th {
+    width: 120px;
+    padding: 10px;
+    background: #2dc0da;
+    color: #ffffff;
+}
+td {
+    padding: 10px;
+}
+th,td {
+    border: 1px solid #7cd1e0;
+    text-align: center;
+}
+button {
+    padding: 10px 20px;
+    font-size: 10px;
+    border-radius: 20px;
+}
+#Degree.active, #DMS.active{
+    color: blue;
+    background-color: orange;
+}
+#D_table, #DMS_table {
+    display: none;
+}
+#D_table.active, #DMS_table.active {
+    display: block;
+}
+
+.b-card{
+    width: 100%;
+    margin: 10px;
+}
+
+.displaysensor{
+    margin-top: 10px;
+}
+
+.setting{
+    max-width: 550px;
+}
+
+.wd{
+    width: 200px;
+}

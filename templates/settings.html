@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container setting">
+        <div class="align-items-center justify-content-center text-center">
+            {{ alert | safe }}
+            <div class="row">
+                <div class="col">
+                    <h1>Settings</h1>
+                </div>
+            </div>
+
+            <form method="POST">
+                <div class="row">
+                    <div class="col">
+                        <label for="exampleFormSelect1" class="form-label">接続ポートを選択してください。</label>
+                        <select class="form-select" name="selected_port">
+                            {{ selected_port | safe }}
+                            {% for i in port_ls %}
+                            <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <label class="form-label">地上局のGNSS情報</label>
+                    <div class="col" id="gpslat">
+                        <input class="form-control" type="text" placeholder="Lat" value="{{ gpslat }}" name="gpslat">
+                    </div>
+                    <div class="col" id="gpslon">
+                        <input class="form-control" type="text" placeholder="Lon" , value="{{ gpslon }}" name="gpslon">
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <label class="form-label">データ保存ファイル名</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" placeholder="ファイル名.csv" ,
+                            value="{{ default_output_file }}" name="default_output_file">
+                    </div>
+                    <div class="col">
+                        <input type="submit" formaction="../download" class="btn btn-primary" value="ダウンロード">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <a href="/" class="btn btn-danger rounded-pill m-4 wd">戻る</a>
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-primary rounded-pill m-4 wd" value="保存">
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="row">
+                <label class="form-label">シリアルモニタ</label>
+                <div class="alert alert-dark text-left" id="console" role="alert">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script>
+        const source = new EventSource("../data");
+        source.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            document.getElementById('console').innerHTML = data.console;
+        }
+
+        navigator.geolocation.watchPosition((position) => {
+            var lat = position.coords.latitude;            // 緯度を取得
+            var lng = position.coords.longitude;           // 経度を取得
+            var accu = position.coords.accuracy;            // 緯度・経度の精度を取得
+            displayData(lat, lng, accu);                    // displayData 関数を実行
+        }, (error) => {                                     // エラー処理（今回は特に何もしない）
+        }, {
+            enableHighAccuracy: true                        // 高精度で測定するオプション
+        });
+        function displayData(lat, lng, accu) {
+            document.getElementById("gpslat").innerHTML = '<input class="form-control" type="text" placeholder="Lat" value=' + lat + ' name = "gpslat" >';
+            document.getElementById("gpslon").innerHTML = '<input class="form-control" type="text" placeholder="Lon" value=' + lng + ' name = "gpslon">';
+        }
+    </script>
+</body>
+
+</html>
