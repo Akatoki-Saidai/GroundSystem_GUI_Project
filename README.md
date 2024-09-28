@@ -32,6 +32,17 @@ or
 python app.py
 ```
 
+## Data Structure
+
+The data is recognised by UART in comma-delimited format per line.
+
+By default, the order is latitude, longitude, altitude, barometric pressure, RSSI, mode, battery, logging status, WiFi status and GNSS status.
+
+```txt
+0.0, 0.0, -17, 0.0, -50,Mode:wait, Bt:Middle, Log:OFF, WiFi:NG, GNSS:unlock"\
+```
+
+If binary data is to be sent or received, code must be added to convert it, or the converted data must be sent via UART.
 
 ## Contributor
 
