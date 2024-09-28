@@ -178,4 +178,4 @@ def download_data():
         return send_file(f'downlinkdata/{setting_data["default_output_file"]}', as_attachment=True, download_name=filename,mimetype='text/csv')
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    app.run(debug=False, threaded=True)
