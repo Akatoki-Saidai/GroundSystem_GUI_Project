@@ -20,12 +20,17 @@ git clone git@github.com:Akatoki-Saidai/GroundSystem_GUI_Project.git
 pip install -r requirements.txt
 ```
 
-3. Run web server
+3. Run the web server
 
 ```shell
 flask --app app run
 ```
 
+or
+
+```shell
+python app.py
+```
 
 
 ## Contributor
