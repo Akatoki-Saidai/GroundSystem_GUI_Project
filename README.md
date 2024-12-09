@@ -26,7 +26,7 @@ pip install -r requirements.txt
 flask --app app run
 ```
 
-or
+or (Recommended way)
 
 ```shell
 python app.py
