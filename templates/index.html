@@ -1,46 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
-    <title>GUI</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-        crossorigin="" />
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Telemetry GUI</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Leaflet for map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 
-<body>
-    <div class="container">
-        <div class="row flex-shrink-1">
+<body class="bg-light">
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- 操作パネル -->
             <div class="col-md-2">
-                <button id="Degree">DEG</button>
-                <button id="DMS">DMS</button>
+                <div class="d-grid gap-2">
+                    <button id="Degree" class="btn btn-primary">DEG</button>
+                    <button id="DMS" class="btn btn-secondary">DMS</button>
+                </div>
             </div>
+
+            <!-- 緯度・経度テーブル -->
             <div class="col-md-6">
-                <div id="D_table">
-                    <div class="table-container">
-                        <table>
+                <div class="card mb-3">
+                    <div class="card-header">Coordinate Data</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
                             <tr>
-                                <th>latitude</th>
+                                <th>Latitude</th>
                                 <td id="latitude"></td>
-                                <th>longitude</th>
+                                <th>Longitude</th>
                                 <td id="longitude"></td>
                             </tr>
                         </table>
                     </div>
                 </div>
-
-                <div id="DMS_table">
-                    <div class="table-container">
-                        <table>
+                <div class="card">
+                    <div class="card-header">DMS Format</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
                             <tr>
-                                <th>latitude</th>
+                                <th>Latitude</th>
                                 <td id="latitude60"></td>
-                                <th>longitude</th>
+                                <th>Longitude</th>
                                 <td id="longitude60"></td>
                             </tr>
                         </table>
@@ -48,111 +58,101 @@
                 </div>
             </div>
 
+            <!-- 接続ポート情報 -->
             <div class="col-md-3">
-                <div class="table-container">
-                    <table>
-                        <tr>
-                            <th>接続ポート</th>
-                            <td>{{selected_port}}</td>
-                        </tr>
-                    </table>
+                <div class="card">
+                    <div class="card-header">Connection</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Port</th>
+                                <td>{{ selected_port }}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-1">
-                <a href="/settings" class="btn btn-secondary m-1">設定</a>
+
+            <!-- 設定ボタン -->
+            <div class="col-md-1 text-end">
+                <a href="/settings" class="btn btn-warning">Settings</a>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <!-- メインコンテンツ -->
+    <div class="container mt-4">
         <div class="row">
+            <!-- 地図表示 -->
             <div class="col-md-6">
-                <div id="map"></div>
-            </div>
-            <div class="col-md-4 a-card text-center">
-                <div class="b-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="altitude_canvas"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="b-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="pressure_canvas"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="b-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="RSSI_canvas"></canvas>
-                        </div>
+                <div class="card">
+                    <div class="card-header">Map</div>
+                    <div class="card-body p-0">
+                        <div id="map" style="height: 300px;"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- グラフ表示 -->
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">Altitude</div>
+                    <div class="card-body">
+                        <canvas id="altitude_canvas"></canvas>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">Pressure</div>
+                    <div class="card-body">
+                        <canvas id="pressure_canvas"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">RSSI</div>
+                    <div class="card-body">
+                        <canvas id="RSSI_canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- センサー情報 -->
             <div class="col-md-2">
-                <div class="table-container displaysensor">
-                    <table>
-                        <tr>
-                            <th>Mode</th>
-                            <td id="Mode"></td>
-                        </tr>
-                        <tr>
-                            <th>Battery</th>
-                            <td id="Battery"></td>
-                        </tr>
-                        <tr>
-                            <th>Log</th>
-                            <td id="Log"></td>
-                        </tr>
-                        <tr>
-                            <th>Wifi</th>
-                            <td id="Wifi"></td>
-                        </tr>
-                        <tr>
-                            <th>GNSS</th>
-                            <td id="GNSS"></td>
-                        </tr>
-                    </table>
+                <div class="card mb-3">
+                    <div class="card-header">Telemetry Data</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr><th>Mode</th><td id="Mode"></td></tr>
+                            <tr><th>Battery</th><td id="Battery"></td></tr>
+                            <tr><th>Log</th><td id="Log"></td></tr>
+                            <tr><th>WiFi</th><td id="Wifi"></td></tr>
+                            <tr><th>GNSS</th><td id="GNSS"></td></tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="table-container displaysensor">
-                    <table>
-                        <tr>
-                            <th>altitude</th>
-                            <td id="altitude"></td>
-                        </tr>
-                        <tr>
-                            <th>pressure</th>
-                            <td id="pressure"></td>
-                        </tr>
-                        <tr>
-                            <th>RSSI</th>
-                            <td id="RSSI"></td>
-                        </tr>
-                        <tr>
-                            <th>Velocity</th>
-                            <td id="velocity"></td>
-                        </tr>
-                    </table>
+                <div class="card">
+                    <div class="card-header">Sensor Data</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tr><th>Altitude</th><td id="altitude"></td></tr>
+                            <tr><th>Pressure</th><td id="pressure"></td></tr>
+                            <tr><th>RSSI</th><td id="RSSI"></td></tr>
+                            <tr><th>Velocity</th><td id="velocity"></td></tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-        crossorigin=""></script>
-    <!--suppress JSUnresolvedLibraryURL -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <!--suppress JSUnresolvedLibraryURL -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!--suppress JSUnresolvedLibraryURL -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-    <script src="{{ url_for('static' , filename='js/main.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-</body>
 
+    <!-- 必要なスクリプト -->
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
 </html>
