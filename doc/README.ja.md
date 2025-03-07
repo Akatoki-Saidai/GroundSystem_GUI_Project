@@ -9,7 +9,7 @@
 さらに、**愛媛県の打ち上げ地点周辺の地図データをオフラインで利用可能** です。
 
 <p align="center">
-    <img src="/image.png" width="600px">
+    <img src="./image.png" width="600px">
 </p>
 
 ## 🚀 特徴
