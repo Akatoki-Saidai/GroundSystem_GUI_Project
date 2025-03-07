@@ -1,6 +1,6 @@
 # GroundSystem_GUI_Project（地上システムGUIプロジェクト）
 
-- [English version](../README.md)
+[English version](../README.md)
 
 **GroundSystem_GUI_Project** は、**ANCO-project 2022** において、電装班班長からの要請に応じて開発されました。このプロジェクトの目的は、**テレメトリ監視用のGUIを作成すること** です。
 
