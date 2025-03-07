@@ -9,7 +9,7 @@
 さらに、**愛媛県の打ち上げ地点周辺の地図データをオフラインで利用可能** です。
 
 <p align="center">
-    <img src="doc/image.png" width="600px">
+    <img src="/image.png" width="600px">
 </p>
 
 ## 🚀 特徴
@@ -82,14 +82,14 @@ python app.py
     <tr>
         <td align="center">
             <a href="https://github.com/ddd3h">
-                <img src="doc/ddd3h.webp" width="100px;" alt="ddd3h"/>
+                <img src="ddd3h.webp" width="100px;" alt="ddd3h"/>
                 <br />
                 <sub><b>ddd3h</b></sub>
             </a>
         </td>
         <td align="center">
             <a href="https://github.com/takashin9">
-                <img src="doc/takashin9.webp" width="100px;" alt="takashin9"/>
+                <img src="takashin9.webp" width="100px;" alt="takashin9"/>
                 <br />
                 <sub><b>takashin9</b></sub>
             </a>
