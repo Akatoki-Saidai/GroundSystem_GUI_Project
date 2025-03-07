@@ -1,5 +1,7 @@
 # GroundSystem_GUI_Project
 
+- [日本語版](doc/README.ja.md)
+
 The **GroundSystem_GUI_Project** was developed in response to a request from the electrical team leader during **ANCO-project 2022** to create a GUI for telemetry monitoring.
 
 This system provides a **user-friendly** and **convenient** way to visualize telemetry data.
@@ -14,7 +16,7 @@ Additionally, **map data of the area around the launch site in Ehime Prefecture 
 
 - **User-friendly GUI**: Easily visualize telemetry data in real-time.
 - **Offline map support**: Preloaded map data allows operation even without an internet connection.
-- **Customizable data structure**: Modify how telemetry data is processed and displayed.
+- **Customizable data stråucture**: Modify how telemetry data is processed and displayed.
 - **Multi-user access**: Run the server on a local or remote machine, allowing multiple users to access telemetry data.
 - **Supports both CLI and GUI operation**: Run via Flask web server or directly with Python.
 
