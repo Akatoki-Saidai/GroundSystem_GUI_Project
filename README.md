@@ -1,6 +1,6 @@
 # GroundSystem_GUI_Project
 
-- [日本語版](doc/README.ja.md)
+[日本語版](doc/README.ja.md)
 
 The **GroundSystem_GUI_Project** was developed in response to a request from the electrical team leader during **ANCO-project 2022** to create a GUI for telemetry monitoring.
 
